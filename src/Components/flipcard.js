@@ -1,15 +1,25 @@
 import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
-import brand from "./branding.png";
+
+import brand from "./Images/brand.png";
+import branding from "./Images/branding.png";
+import business from "./Images/business.jpg";
+import machinelearning from "./Images/machinelearning.png";
+import marketing from "./Images/marketing.png";
+import website from "./Images/website.png";
 
 /*------------------STYLED COMPONENTS------------*/
 
 /*WRAPPER CLASS*/
 
-const FlipCardWrapper = styled.div`
+const FlipCardWrapper = styled.div.attrs(({ padding, bg, headimg }) => ({
+  padding: padding,
+  bg: bg,
+  headimg: headimg
+}))`{
 
 
-  background: #ccc;
+  background:#ccc;
   padding: 50px;
   font-family: "Nunito", sans-serif;
 
@@ -77,22 +87,24 @@ const FlipCardWrapper = styled.div`
       }
    }
    .card-heading{  /* for card heading  style*/
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 100;
     text-transform: uppercase;
     text-align: right;
     color: #fff;
     position: absolute;
     top: 7.5rem;
-    right: 1.8rem;
+    right: 1.2rem;
     width: 75%;
 
 
     span{   /* card heading background and text */
-      background-image: linear-gradient(to right bottom,rgba(18,104,56,.85),rgba(11,80,42,.85));
-      padding: 0.5rem 0.9rem;
+      background-image: ${props => props.headimg};
+      padding: ${props => props.padding};
+      
       -webkit-box-decoration-break: clone;
       box-decoration-break: clone;
+      
     
     }
   }
@@ -104,7 +116,7 @@ const FlipCardWrapper = styled.div`
 
   .flip-card-back {                       /*BACK FACE */
 
-    background-image: linear-gradient(to right bottom,#126838,#0b502a);
+    background-image: ${props => props.bg};
     color: white;
     text-align: center;
     transform: rotateY(-180deg);
@@ -144,6 +156,7 @@ const FlipCardWrapper = styled.div`
       }
     }
   }
+}
 }
 }
 
@@ -189,12 +202,10 @@ const afterbutton = keyframes` {
 
 /* Tell Me More Button*/
 
-const Button = styled.button`
-  background: white;
-  color: #777;
-  
+const Button = styled.div`
+  background: white; 
   text-transform: uppercase;
-  text-decoration: none;
+  
   padding: 1.2rem 2rem;
   display: inline-block;
   border-radius: 12rem;
@@ -203,7 +214,12 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   margin: 0.3rem;
-  
+
+  a{
+    color: #777;
+    text-decoration: none;
+    
+  }
 
   :hover {
     animation: ${buttonani} 0.2s linear forwards;
@@ -221,33 +237,40 @@ class FlipCard extends Component {
   render() {
     return (
       <div>
-        <FlipCardWrapper>
+        <FlipCardWrapper
+          padding={this.props.parameters.padding}
+          bg={this.props.parameters.backimg}
+          headimg={this.props.parameters.headimg}
+        >
           <div className="flip-card">
             <div className="flip-card-inner">
               <div className="flip-card-front">
-                <img src={brand} alt="Avatar" />
+                <img
+                  src={Object.values(this.props.parameters.img).toString()}
+                  alt="Avatar"
+                />
                 <h4 className="card-heading">
-                  <span>Investment Branding</span>
+                  <span>{this.props.parameters.heading} </span>
                 </h4>
                 <div className="card-details">
-                  <ul>
-                    Investment Branding is a set of professional documents which
-                    articulates a well-researched business opportunity and a
-                    rational plan towards the achievement of scale
-                  </ul>
+                  <ul>{this.props.parameters.content}</ul>
                 </div>
               </div>
 
               <div className="flip-card-back">
                 <div className="back-card-details">
                   <div className="about">
-                    <p className="about-general">To Build</p>
+                    <p className="about-general">
+                      {this.props.parameters.backFirst}
+                    </p>
                     <p className="about-specific">
-                      Investment Branding Documents{" "}
+                      {this.props.parameters.backSecond}
                     </p>
                   </div>
 
-                  <Button>Tell Me More</Button>
+                  <Button>
+                    <a>Tell Me More</a>
+                  </Button>
                 </div>
               </div>
             </div>
