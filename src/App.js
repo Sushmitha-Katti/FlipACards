@@ -11,6 +11,10 @@ import website from "./Components/Images/website.png";
 const Cards = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
+
+  @media (max-width: 56.25em) {
+    grid-template-columns: auto;
+  }
 `;
 
 class App extends Component {
